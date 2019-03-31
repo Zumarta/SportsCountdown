@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Sports Countdown</string>
+    <string name="no_break">ES GIBT KEINE PAUSE!!!</string>
+    <string name="short_break">Päuschen…</string>
+    <string name="seconds_timer"> Sekunden</string>
+    <string name="remaining_timer">Noch </string>
+    <string name="finished">Das war\'s!</string>
+    <string name="niceday">Genieß\' Deinen Tag!</string>
+    <string name="back">Zurück</string>
 </resources>
