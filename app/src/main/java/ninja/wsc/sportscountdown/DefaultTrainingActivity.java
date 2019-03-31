@@ -1,12 +1,15 @@
 package ninja.wsc.sportscountdown;
 
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,7 +29,7 @@ public class DefaultTrainingActivity extends AppCompatActivity {
     TextView currentExerciseText, nextExercise, countdownText, nextExerciseLabel, exerciseLabel, breakText, navBackButton;
 
     // Buttons
-    ImageButton playButton, holdButton;
+    Button playButton, holdButton;
 
     // Countdown object
     CountDownTimer countdown, pauseCountdown = null;
@@ -34,12 +37,19 @@ public class DefaultTrainingActivity extends AppCompatActivity {
     // Store list index to prevent not showing stuff in for-loops
     int currentListIndex = 0;
 
+    // Ringtone
+    Ringtone ringtone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_default_training);
         // Keep phone awake
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // Ringtone component
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        ringtone = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
         this.constructDefaultExercises();
         this.initUI();
@@ -130,6 +140,13 @@ public class DefaultTrainingActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
+                    // Play sound
+                    try {
+                        ringtone.play();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     // Initialize pause
                     currentExerciseText.setText("Päuschen...");
 
@@ -142,6 +159,13 @@ public class DefaultTrainingActivity extends AppCompatActivity {
 
                         @Override
                         public void onFinish() {
+                            // Play sound
+                            try {
+                                ringtone.play();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                             // Prepare next exercise
                             currentListIndex++;
 
@@ -180,20 +204,20 @@ public class DefaultTrainingActivity extends AppCompatActivity {
      * This method creates default exercises based on a specific plan.
      */
     private void constructDefaultExercises() {
-        this.exercisesList.add(new Exercise("Squats", 9, 5));
-        this.exercisesList.add(new Exercise("Sitting Twists", 9, 5));
-        this.exercisesList.add(new Exercise("Renegade Raws", 9, 5));
+        this.exercisesList.add(new Exercise("Squats", 90, 20));
+        this.exercisesList.add(new Exercise("Sitting Twists", 90, 20));
+        this.exercisesList.add(new Exercise("Renegade Raws", 90, 20));
 
-//        this.exercisesList.add(new Exercise("Plank Jump-Ins", 90, 20));
-//        this.exercisesList.add(new Exercise("Flutter Kicks", 90, 20));
-//        this.exercisesList.add(new Exercise("Back Kicks", 90, 20));
-//
-//        this.exercisesList.add(new Exercise("Bridge Taps", 90, 20));
-//        this.exercisesList.add(new Exercise("Climbers", 90, 20));
-//        this.exercisesList.add(new Exercise("Butt-Ups", 90, 20));
-//
-//        this.exercisesList.add(new Exercise("Back Rotations", 90, 20));
-//        this.exercisesList.add(new Exercise("Knee Tuck Jumps", 90, 20));
-//        this.exercisesList.add(new Exercise("Cross Punch Sit Ups", 90, 20));
+        this.exercisesList.add(new Exercise("Plank Jump-Ins", 90, 20));
+        this.exercisesList.add(new Exercise("Flutter Kicks", 90, 20));
+        this.exercisesList.add(new Exercise("Back Kicks", 90, 20));
+
+        this.exercisesList.add(new Exercise("Bridge Taps", 90, 20));
+        this.exercisesList.add(new Exercise("Climbers", 90, 20));
+        this.exercisesList.add(new Exercise("Butt-Ups", 90, 20));
+
+        this.exercisesList.add(new Exercise("Back Rotations", 90, 20));
+        this.exercisesList.add(new Exercise("Knee Tuck Jumps", 90, 20));
+        this.exercisesList.add(new Exercise("Cross Punch Sit Ups", 90, 20));
     }
 }
